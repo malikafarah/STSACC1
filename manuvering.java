@@ -1,4 +1,3 @@
-package STSACC1;
 //to - do return number of moves to reach the destination
 
 class manuvering{
