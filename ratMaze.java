@@ -4,30 +4,32 @@ import java.lang.*;
 
 class ratMaze {
     static boolean isSafe(int[][] maze, int[][] sol, int x, int y, int N){
-        return x>=0 && x < N && y>=0 && y<N && maze[x][y] == 1 && sol[x][y] == 0;
+        return x >= 0 && x < N && y >= 0 && y < N && maze[x][y] == 1 && sol[x][y] == 0;
     }
 
     static boolean solveMazeUtil(int[][] maze, int x, int y, int[][] sol, int N){
-        if(x == N - 1 && y ==N-1 && maze[x][y] == 1 ){
+        if(x == N-1 && y == N-1 && maze[x][y] == 1){
             sol[x][y] = 1;
             return true;
         }
 
         if(isSafe(maze, sol, x, y, N)){
             sol[x][y] = 1;
-            if(solveMazeUtil(maze, x+1, y, sol, N)) return true;       
-            if(solveMazeUtil(maze, x, y+1, sol, N)) return true;
+            if(solveMazeUtil(maze, x+1, y, sol, N)) return true;
             if(solveMazeUtil(maze, x-1, y, sol, N)) return true;
+            if(solveMazeUtil(maze, x, y+1, sol, N)) return true;
             if(solveMazeUtil(maze, x, y-1, sol, N)) return true;
+            if(solveMazeUtil(maze, x+1, y+1, sol, N)) return true;
             sol[x][y] = 0;
         }
+
         return false;
     }
     public static void main(String[] args) {
     int[][] maze = {
-        {1, 0, 0, 0},
-        {1, 1, 0, 1},
-        {0, 1, 0, 0},
+        {1, 0, 1, 0},
+        {1, 0, 1, 1},
+        {0, 1, 1, 0},
         {1, 1, 1, 1}
     };
 
@@ -46,3 +48,4 @@ class ratMaze {
     }
 }
 }
+
