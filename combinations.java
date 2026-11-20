@@ -2,16 +2,17 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 class combinations{
-    public static void combine(int[] nums, int count, int size, int start, String comb){
-        if(count == size){
-            System.out.println(comb);
-        }else{
-            for(int i = start; i<nums.length; i++){
-                combine(nums, count+1, size, i+1, comb + nums[i] + " ");
-            }
+    static void combUtil2(int[] arr, int n, int r, int index, int[] data, int i) {
+        if (index == r) {
+            for (int j = 0; j < r; j++) System.out.print(data[j] + " ");
+            System.out.println();
+            return;
         }
-        
-    }
+        if (i >= n) return;
+        data[index] = arr[i];
+        combUtil2(arr, n, r, index + 1, data, i + 1); // include arr[i]
+        combUtil2(arr, n, r, index, data, i + 1);     // exclude arr[i]
+}
 
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);

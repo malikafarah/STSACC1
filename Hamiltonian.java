@@ -1,42 +1,38 @@
-import java.util.*;
 
-public class Hamiltonian {
-    void findHamiltonianCycle(int[][] g){
-        int n = g.length;
-        int[] path = new int[n+1];
-        Arrays.fill(path, -1);
-        boolean[] visited = new boolean[n];
+class Hamiltonian{
+    static boolean check(int[][] graph, int[] path, int n){
+        for (int i = 0; i < n-1; i++) {
+            if(graph[path[i]][path[i+1]]==0) return false; 
+        }
 
-        path[0] = 0;
-        visited[0] = true;
-
-        if(!solve(g, path, visited, 1)){
-            System.out.println("No solution");
-            return;
-    
-
-        path[n] = 0;
-        System.out.println("Solution found");
-        System.out.print(Arrays.toString(path));
+        if(graph[path[n-1]][path[0]]==0) return false;
+        
+        return true;
     }
 
-    boolean solve(int[][] g, int[] path, boolean[] visited, int pos) {
-        int n = g.length;
-        if (pos == n) return g[path[pos - 1]][0] == 1;
+    static boolean solve(int[][] graph, int[] path, boolean[] visited, int index, int n){
+        if (index == n) {
 
-        for (int v = 1; v < n; v++) {
-            if (g[path[pos - 1]][v] == 1 && !visited[v]) {
-                path[pos] = v;
-                visited[v] = true;
+            if (check(graph, path, n)) {
+                for (int i = 0; i < n; i++)
+                    System.out.print(path[i] + " ");
 
-                if (solve(g, path, visited, pos + 1)) return true;
+                System.out.println(path[0]);
+                return true;
+            }
 
-                visited[v] = false; // backtrack
-                path[pos] = -1;
+            return false;
+        }
+
+        for(int i=1; i<n; i++){
+            if(!visited[i]){
+                path[index] = i;
+                visited[i] = true;
+
+                if(solve(graph, path, visited, index+1, n)) return true;
+                visited[i] = false;
             }
         }
         return false;
     }
-
-    
 }
